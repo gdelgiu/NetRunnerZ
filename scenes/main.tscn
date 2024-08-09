@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://8110dipceuyh"]
+[gd_scene load_steps=7 format=3 uid="uid://8110dipceuyh"]
 
 [ext_resource type="Shader" path="res://scripts/shaders/wireframe.gdshader" id="1_o5t1k"]
-[ext_resource type="Script" path="res://scripts/mechanics/PlayerMechanics.gd" id="2_yw0tw"]
+[ext_resource type="PackedScene" uid="uid://dv5ikwx3ewo4f" path="res://scenes/player.tscn" id="2_hdgjn"]
+[ext_resource type="PackedScene" uid="uid://ypgw2y27idkv" path="res://scenes/Cube.tscn" id="3_0j6pb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xkxyf"]
 size = Vector3(100, 2, 100)
@@ -20,10 +21,6 @@ size = Vector2(100, 100)
 subdivide_width = 9
 subdivide_depth = 9
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qpri5"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_r0hus"]
-
 [node name="Main" type="Node"]
 
 [node name="FloorPlaceholder" type="StaticBody3D" parent="."]
@@ -35,19 +32,8 @@ shape = SubResource("BoxShape3D_xkxyf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("PlaneMesh_n32ws")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.39374, 0)
-safe_margin = 0.01
-script = ExtResource("2_yw0tw")
+[node name="Player" parent="." instance=ExtResource("2_hdgjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17605, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("BoxShape3D_qpri5")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-mesh = SubResource("BoxMesh_r0hus")
-
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="CharacterBody3D"]
-remote_path = NodePath("../../Camera3D")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.39374, 0)
+[node name="Node3D" parent="." instance=ExtResource("3_0j6pb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.11058, -20)
