@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dey1pgy78pbuj"]
+[gd_scene load_steps=7 format=3 uid="uid://dey1pgy78pbuj"]
 
 [ext_resource type="Script" path="res://scripts/mechanics/laser_beam.gd" id="1_g1glm"]
 [ext_resource type="PackedScene" uid="uid://bvhu2tyolse66" path="res://Assets/LaserBeam.glb" id="2_1khtr"]
@@ -11,11 +11,18 @@ emission = Color(0.922946, 0.702908, 0.350062, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_3xqog"]
 size = Vector3(19.985, 1.995, 6.055)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akeib"]
+albedo_color = Color(0.643976, 0.714842, 0.0875094, 1)
+emission_enabled = true
+emission = Color(0.921569, 0.701961, 0.34902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mlisl"]
+
 [node name="LaserBeam" type="Node3D"]
 script = ExtResource("1_g1glm")
 
 [node name="LaserBeam" parent="." instance=ExtResource("2_1khtr")]
-transform = Transform3D(0.426828, 0, 0, 0, 0.274398, 0, 0, 0, 0.314385, 0, 0, 0)
+transform = Transform3D(-1.86572e-08, 0, 0.314385, 0, 0.274398, 0, -0.426828, 0, -1.37422e-08, 0, 0, 0)
 
 [node name="Cube" parent="LaserBeam" index="0"]
 material_override = SubResource("StandardMaterial3D_lwne6")
@@ -26,6 +33,31 @@ material_override = SubResource("StandardMaterial3D_lwne6")
 transform = Transform3D(1.00592, 0, 0, 0, 1.00592, 0, 0, 0, 1.00592, 0, 0, 0)
 shape = SubResource("BoxShape3D_3xqog")
 
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.56311)
+material_override = SubResource("StandardMaterial3D_akeib")
+emitting = false
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("BoxMesh_mlisl")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 3.0
+emission_ring_inner_radius = 0.0
+spread = 36.35
+flatness = 0.48
+gravity = Vector3(0, -1, 9.8)
+damping_min = 25.0
+damping_max = 55.415
+angle_min = 41.5
+angle_max = 180.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="body_entered" from="LaserBeam/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 
 [editable path="LaserBeam"]

@@ -2,6 +2,10 @@ extends CharacterBody3D
 
 @onready var anim = $NtRnZCharV2/AnimationPlayer
 @onready var steps_timer = $StepsAudioTimer
+@onready var bullet_spawner = $Marker3D
+@onready var laser_beam : PackedScene = preload("res://scenes/laser_beam.tscn")
+#laser_synchro forse non serve
+@onready var laser_synchro = $LaserSynchroTimer
 const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 
@@ -49,7 +53,10 @@ func _input(event):
 func _shoot():
 	print_debug("SPARATO")
 	#is_shooting = false
+	var beam = laser_beam.instantiate()
+	beam.global_position = bullet_spawner.global_position
 	anim.play("Shoot_001")
+	beam.instantiate()
 	print_debug("DIOPORCO")
 	#is_shooting = false
 	pass

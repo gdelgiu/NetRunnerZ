@@ -1088,7 +1088,7 @@ bones/9/parent = 8
 bones/9/rest = Transform3D(0.988217, 0.0737711, 0.134106, 0.0162751, 0.820565, -0.571321, -0.152189, 0.566772, 0.809696, 5.6345e-08, 0.304571, -2.32831e-08)
 bones/9/enabled = true
 bones/9/position = Vector3(5.6345e-08, 0.304571, -2.32831e-08)
-bones/9/rotation = Quaternion(0.0958484, -0.17933, -0.437244, 0.876054)
+bones/9/rotation = Quaternion(0.0958335, -0.17932, -0.437243, 0.876059)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/name = "hand.L"
 bones/10/parent = 9
@@ -1123,7 +1123,7 @@ bones/14/parent = 13
 bones/14/rest = Transform3D(0.988217, -0.0737713, -0.134105, -0.0162749, 0.820565, -0.571321, 0.152189, 0.566772, 0.809696, -1.44355e-08, 0.30457, 3.72529e-09)
 bones/14/enabled = true
 bones/14/position = Vector3(-1.44355e-08, 0.30457, 3.72529e-09)
-bones/14/rotation = Quaternion(0.234211, -0.274299, 0.226257, 0.904828)
+bones/14/rotation = Quaternion(0.234193, -0.274296, 0.226269, 0.90483)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "hand.R"
 bones/15/parent = 14
@@ -1246,7 +1246,7 @@ bones/31/rotation = Quaternion(8.8477e-09, 2.79397e-07, 6.81707e-08, 1)
 bones/31/scale = Vector3(1, 1, 1)
 
 [node name="Cube" type="BoneAttachment3D" parent="NtRnZCharV2/metarig/Skeleton3D"]
-transform = Transform3D(0.0620733, 0.0182445, 0.0232695, -0.0227708, 0.0545781, 0.0420575, -0.00444264, -0.0248261, 0.10956, -0.0625067, 1.55275, 0.57211)
+transform = Transform3D(0.0620733, 0.0182447, 0.0232686, -0.0227707, 0.0545792, 0.0420526, -0.00444308, -0.0248236, 0.109562, -0.0625095, 1.55273, 0.572115)
 bone_name = "Cube"
 bone_idx = 17
 
@@ -1289,6 +1289,11 @@ script = ExtResource("2_4148y")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_dmmyg")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54604, -0.861848)
+
+[node name="LaserSynchroTimer" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="NtRnZCharV2/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
