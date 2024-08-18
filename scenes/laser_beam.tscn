@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dey1pgy78pbuj"]
+
+[ext_resource type="Script" path="res://scripts/mechanics/laser_beam.gd" id="1_g1glm"]
+[ext_resource type="PackedScene" uid="uid://bvhu2tyolse66" path="res://Assets/LaserBeam.glb" id="2_1khtr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwne6"]
+albedo_color = Color(0.881464, 0.707722, 0, 1)
+emission_enabled = true
+emission = Color(0.922946, 0.702908, 0.350062, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3xqog"]
+size = Vector3(19.985, 1.995, 6.055)
+
+[node name="LaserBeam" type="Node3D"]
+script = ExtResource("1_g1glm")
+
+[node name="LaserBeam" parent="." instance=ExtResource("2_1khtr")]
+transform = Transform3D(0.426828, 0, 0, 0, 0.274398, 0, 0, 0, 0.314385, 0, 0, 0)
+
+[node name="Cube" parent="LaserBeam" index="0"]
+material_override = SubResource("StandardMaterial3D_lwne6")
+
+[node name="Area3D" type="Area3D" parent="LaserBeam"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LaserBeam/Area3D"]
+transform = Transform3D(1.00592, 0, 0, 0, 1.00592, 0, 0, 0, 1.00592, 0, 0, 0)
+shape = SubResource("BoxShape3D_3xqog")
+
+[connection signal="body_entered" from="LaserBeam/Area3D" to="." method="_on_area_3d_body_entered"]
+
+[editable path="LaserBeam"]

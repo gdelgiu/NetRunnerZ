@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@onready var anim = $NtRnZChar/AnimationPlayer
+@onready var anim = $NtRnZCharV2/AnimationPlayer
 @onready var steps_timer = $StepsAudioTimer
 const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
@@ -17,10 +17,42 @@ var is_shooting : bool = false
 var is_jumping : bool = false
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	anim.play("Idle")
+
+func _state_machine():
+	if is_shooting:
+		anim.play("Shoot_001")
+	elif is_jumping:
+		anim.play("Jump")
+	elif is_walking:
+		anim.play("Walk")
+	elif is_running:
+		anim.play("Run_001")
+	else:
+		anim.play("Idle_001")
 	
+func _input(event):
+	if event is InputEventMouseMotion:
+		rotate_y(deg_to_rad(event.relative.x * -0.09))
+#with these mouse settings the cursor is confindet to the window's size,
+#and therefore is not possible to close the window
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+	if event.is_action_pressed("mouse_left"):
+		_reset_states()
+		is_shooting = true
+		if event.is_released():
+			print_debug("MOLLATO")
+			_reset_states()
 
-
+func _shoot():
+	print_debug("SPARATO")
+	#is_shooting = false
+	anim.play("Shoot_001")
+	print_debug("DIOPORCO")
+	#is_shooting = false
+	pass
 #aggiornato la mappatura dei comandi, aggiunto WASD a ui_left, ui_right etc
 #aggiunto azione "interact" che risponde al tasto "E"
 func _physics_process(delta):
@@ -28,11 +60,11 @@ func _physics_process(delta):
 		get_tree().quit()
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y -= gravity * delta
 		_reset_states()
-		is_jumping = true
+		velocity.y -= gravity * delta
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		is_jumping = true
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -44,14 +76,24 @@ func _physics_process(delta):
 		is_walking = true
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+	#if !direction and !is_jumping and !is_walking  and !is_running and !is_shooting:
+##		_reset_states()running
+		#direction = 0
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		if is_shooting:
+			_shoot()
+		else:
+			_reset_states()
+			is_idle = true
+		#velocity.x = move_toward(velocity.x, 0, SPEED)
+		#velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
 	_update_animations()
 
 func _reset_states():
+	velocity.x = move_toward(velocity.x, 0, SPEED)
+	velocity.z = move_toward(velocity.z, 0, SPEED)
 	is_idle = false
 	is_running = false
 	is_shooting = false
@@ -59,14 +101,17 @@ func _reset_states():
 	is_jumping = false
 	
 func _update_animations():
-	if is_idle:
-		anim.play("Idle")
-	elif is_running:
+	
+	if is_running:
 		anim.play("Run_001")
 	elif is_walking:
 		anim.play("Walk")
 	elif is_shooting:
 		anim.play("Shoot_001")
+	elif is_jumping:
+		anim.play("Jump")
+	elif is_idle:
+		anim.play("Idle")
 
 func _take_damage(n):
 	HEALTH -= n
@@ -74,4 +119,13 @@ func _take_damage(n):
 func _on_area_3d_body_entered(body):
 	#if body is bullet:
 	#	_take_damage(body.damage)
+	pass # Replace with function body.
+
+##never seems to print out the debug string, might need to properly check getters and other methods
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "Shoot_001":
+		print_debug("Quack")
+		_reset_states()
+		is_idle = true
+
 	pass # Replace with function body.

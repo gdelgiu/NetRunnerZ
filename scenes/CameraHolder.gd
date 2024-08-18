@@ -1,5 +1,5 @@
 extends Node3D
-var HEALTH = 75
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,15 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if HEALTH <= 0 :
-		self.queue_free()
 	pass
 
-func _take_damage(n):
-	HEALTH -= n
-
-func _on_area_3d_body_entered(body):
-	#print_debug("DIOBUBU")
-	#if body is bullet:
-	#	_take_damage(body.damage)
-	pass # Replace with function body.
+func _input(event):
+	if event is InputEventMouseMotion:
+		rotate_x(deg_to_rad(event.relative.y * -0.09))
