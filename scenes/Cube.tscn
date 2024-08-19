@@ -59,7 +59,7 @@ shader_parameter/wire_smoothness = 0.01
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7l4s7"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" groups=["destructibles"]]
 script = ExtResource("1_gteha")
 
 [node name="CyberBrick" type="Node3D" parent="."]

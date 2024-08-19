@@ -53,12 +53,15 @@ func _input(event):
 func _shoot():
 	print_debug("SPARATO")
 	#is_shooting = false
-	var beam = laser_beam.instantiate()
-	beam.global_position = bullet_spawner.global_position
+	var beam 
+	beam = laser_beam.instantiate()
+	beam.position = bullet_spawner.global_position
+	beam.transform.basis = bullet_spawner.global_transform.basis
+	beam.look_at(Vector3((get_viewport().size/2).x, (get_viewport().size/2).y,beam.global_position.z -500),Vector3.UP)
 	anim.play("Shoot_001")
-	beam.instantiate()
-	print_debug("DIOPORCO")
-	#is_shooting = false
+	#print_debug("DIOPORCO")
+	get_parent().add_child(beam)
+	is_shooting = false
 	pass
 #aggiornato la mappatura dei comandi, aggiunto WASD a ui_left, ui_right etc
 #aggiunto azione "interact" che risponde al tasto "E"

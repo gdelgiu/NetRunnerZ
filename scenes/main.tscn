@@ -108,4 +108,4 @@ shape = SubResource("BoxShape3D_cngmg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.56845, 2.03792, -25.0132)
 
 [node name="CyberCube001" parent="." instance=ExtResource("4_jdj2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179367, 1.0257, -34.4067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179367, 3.0257, -34.4067)

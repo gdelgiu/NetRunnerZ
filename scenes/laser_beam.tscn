@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dey1pgy78pbuj"]
+[gd_scene load_steps=8 format=3 uid="uid://dey1pgy78pbuj"]
 
 [ext_resource type="Script" path="res://scripts/mechanics/laser_beam.gd" id="1_g1glm"]
 [ext_resource type="PackedScene" uid="uid://bvhu2tyolse66" path="res://Assets/LaserBeam.glb" id="2_1khtr"]
+[ext_resource type="AudioStream" uid="uid://c52pyp5f611li" path="res://Assets/Audio/gun-laser-single-shot-sci-fi-102814.mp3" id="3_78psv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwne6"]
 albedo_color = Color(0.881464, 0.707722, 0, 1)
@@ -56,6 +57,10 @@ angle_max = 180.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_78psv")
+autoplay = true
 
 [connection signal="body_entered" from="LaserBeam/Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
